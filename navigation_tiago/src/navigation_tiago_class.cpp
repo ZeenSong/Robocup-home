@@ -18,7 +18,7 @@ int Navigation_tiago::movearm(std::map<std::string, double> target_position)
 	torso_arm_joint_names = group_arm_torso.getJoints();
 
 	group_arm_torso.setStartStateToCurrentState();
-	group_arm_torso.setMaxVelocityScalingFactor(1.0);
+	group_arm_torso.setMaxVelocityScalingFactor(0.3);
 
 	for (unsigned int i = 0; i < torso_arm_joint_names.size(); ++i)
 		if ( target_position.count(torso_arm_joint_names[i]) > 0 )
@@ -49,12 +49,11 @@ int Navigation_tiago::movearm(std::map<std::string, double> target_position)
 }
 
 move_base_msgs::MoveBaseGoal Navigation_tiago::Next_point(int id) 
-{
+{	
+	//define the navigation
 	move_base_msgs::MoveBaseGoal goal;
-
 	goal.target_pose.header.frame_id = "map";
 	goal.target_pose.header.stamp = ros::Time::now();
-
 	goal.target_pose.pose.position.x = Targetx[id];
 	goal.target_pose.pose.position.y = Targety[id];
 	goal.target_pose.pose.position.z = 0.0;

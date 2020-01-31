@@ -59,7 +59,7 @@ bool grasp::grasp_f(std_srvs::Empty::Request &req,std_srvs::Empty::Response &res
                     group_arm_torso.getPlanningFrame());
 
     group_arm_torso.setStartStateToCurrentState();
-    group_arm_torso.setMaxVelocityScalingFactor(1.0);
+    group_arm_torso.setMaxVelocityScalingFactor(0.3);
     moveit::planning_interface::MoveGroupInterface::Plan my_plan;
     //set maximum time to find a plan
     group_arm_torso.setPlanningTime(10.0);
@@ -100,7 +100,7 @@ bool grasp::grasp_rectify(std_srvs::Empty::Request &req,std_srvs::Empty::Respons
 
     group_arm_torso.setStartStateToCurrentState();
     ROS_INFO("1");
-    group_arm_torso.setMaxVelocityScalingFactor(1.0);
+    group_arm_torso.setMaxVelocityScalingFactor(0.3);
     ROS_INFO("2");
     moveit::planning_interface::MoveGroupInterface::Plan my_plan;
     ROS_INFO("3");

@@ -18,15 +18,7 @@ namespace NAVIGATIONTIAGO{
 class Navigation_tiago
 {
     private:
-
-
-        // this is for gazebo simulation!!!!!
-        // double Targetx[3] = {-1.8,0.029,0.0};
-        // double Targety[3] = {2.4,2.4,0.0};
-        // double Targetz[3] = {0.7071,0.7071,0.7071};
-        // double Targetw[3] = {0.7071,0.7071,0.7071};
-        // char Target[3] = {'A', 'B','C'};
-
+        //define all thw nodes and variables
         ros::NodeHandle n;
         ros::NodeHandle nh_;
         ros::NodeHandle priv_nh_;
@@ -76,12 +68,6 @@ class Navigation_tiago
     double Targetw[3] = {0.667,0.707,0.723};
     char Target[3] = {'A', 'B','C'};
 
-    // ros::Subscriber sub_left = n.subscribe("table", 1000, &NAVIGATIONTIAGO::Navigation_tiago::TableCallback,this);
-
-    // void TableCallback(const std_msgs::String::ConstPtr& msg_table)
-    // {
-    //     msg1 = msg_table->data.c_str();
-    // }
 
 
     Navigation_tiago(ros::NodeHandle nh) : nh_(nh), priv_nh_("~")
@@ -144,23 +130,7 @@ class Navigation_tiago
         //go to point
         while (ros::ok()){
             while(true){
-                //go to point 0
-                // ROS_INFO("%s",msg1);
-                // if(msg1 == "left")
-                // {
-                //     goal = Next_point(0);
-                //     ROS_INFO("Sending goal");
-                //     ac.sendGoal(goal);
-                //     ac.waitForResult();
-
-                //     if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
-                //         {ROS_INFO("The Robot has achieved Point %c",Target[0]);
-                //         success.x = (bool) 1;
-                //         pub_success.publish(success);
-                //         break;}
-                //     else
-                //         ROS_INFO("The Robot fail to achieve Point %c",Target[0]);
-                // }
+                //go to point 1
                 goal = Next_point(1);
                 ROS_INFO("Sending goal");
                 ac.sendGoal(goal);
@@ -176,6 +146,7 @@ class Navigation_tiago
             }
             ros::Duration(5).sleep();
 
+            // fix to the lift_position to make the motionplanner easier
             movearm(lift_position);
             // fix the accurate place to grasp in y aixs
 
@@ -195,16 +166,6 @@ class Navigation_tiago
             }
             ros::Duration(2).sleep();
 
-            // // after grasping first rotate a little bit
-            // // msg.angular.z = 60*3.14;
-            // // for(double t0=0;t0<5;t0=t0+0.1){
-            // //     ROS_INFO("Rotate the robot"); 
-            // //     pub.publish(msg);
-            // //     ros::spinOnce();
-            // //     r.sleep();
-            // // }
-
-            ////////////////////////////////////////////////////////////
             // then move backward a little to assure robot action wont touch table
             msg.linear.x = -0.3;
             msg.angular.z = 0;
@@ -227,27 +188,12 @@ class Navigation_tiago
             if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
                 {ROS_INFO("The Robot has achieved Point %c",Target[1]);
                 ros::Duration(3).sleep();
-                // first lift position
-                // movearm(lift_position);
-                // ros::Duration(3).sleep();
-
-                //// then drop position
-                // // movearm(drop_pose);
-                // // // then move forward a little to assure bottle can be on table
-                // // msg.linear.x = 0.5;
-                // // msg.angular.z = 0;
-                // // for(double t0=0;t0<2;t0=t0+0.1){
-                // //     ROS_INFO("foward"); 
-                // //     pub.publish(msg);
-                // //     ros::spinOnce();
-                // //     r.sleep();
-                // // }
 
                 // call service to loose the gripper
                 system("rosrun pal_gripper_controller_configuration_gazebo home_gripper.py");
+
                 // after droping sleep 300 s
                 ros::Duration(300).sleep();
-
                 }
             else
                 ROS_INFO("The Robot fail to achieve Point %c",Target[1]);
