@@ -62,10 +62,10 @@ class Navigation_tiago
     //double Targetw[3] = {0.667,0.667,0.667};
     //char Target[3] = {'A', 'B','C'};
 
-    double Targetx[3] = {-1.819,-0.707,-1.747};
-    double Targety[3] = {-1.752,-1.233,-1.940};
-    double Targetz[3] = {-0.745,-0.707,-0.691};
-    double Targetw[3] = {0.667,0.707,0.723};
+    double Targetx[3] = {-1.819,1.103,1.218};
+    double Targety[3] = {-1.752,0.179,1.456};
+    double Targetz[3] = {-0.745,0.129,0.656};
+    double Targetw[3] = {0.667,0.992,0.755};
     char Target[3] = {'A', 'B','C'};
 
 
